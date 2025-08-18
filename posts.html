@@ -1,0 +1,24 @@
+<!-- tells_frontend/posts.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Posts - Tells</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <h1>Your Stories</h1>
+
+  <form id="postForm">
+    <input type="text" id="title" placeholder="Title" required><br>
+    <textarea id="content" placeholder="Write your story..." required></textarea><br>
+    <button type="submit">Create Post</button>
+  </form>
+
+  <hr>
+
+  <h2>All Posts</h2>
+  <div id="postsContainer"></div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
