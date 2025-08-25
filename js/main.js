@@ -1,7 +1,6 @@
-// tells_frontend/js/main.js
-const API_BASE = "https://tells-frontend.onrender.com"; // Adjust if deployed elsewhere
 
-// ========== GAME PROGRESS ==========
+const API_BASE = "https://tells-frontend.onrender.com"; 
+
 
 function saveProgress(sceneId) {
   fetch(`${API_BASE}/progress`, {
@@ -22,11 +21,11 @@ async function loadProgress() {
 
   const data = await res.json();
   if (data.scene) {
-    goToScene(data.scene); // 🎮 Replace with your game loader
+    goToScene(data.scene); 
   }
 }
 
-// Check if user has save (used on game load)
+// Check if user has save 
 async function checkIfUserHasSave() {
   const res = await fetch(`${API_BASE}/progress`, {
     headers: { Authorization: `Bearer ${token}` }
@@ -35,7 +34,6 @@ async function checkIfUserHasSave() {
   const data = await res.json();
   if (data.scene !== null) {
     console.log("User has a save on this device.");
-    // Optionally show resume prompt
   }
 }
 function showWelcomeMessage() {
@@ -70,11 +68,11 @@ document.addEventListener("DOMContentLoaded", () => {
       welcomeEl.innerHTML = `<a href="/profile.html" class="welcome-link">Welcome, @${username}</a>`;
     }
 
-    // Hide login/register if user is logged in
+    // Hide login/register 
     if (loginBtn) loginBtn.style.display = "none";
     if (registerBtn) registerBtn.style.display = "none";
   } else {
-    // Hide welcome if no token
+    // Hide welcome 
     if (welcomeEl) welcomeEl.innerHTML = "";
   }
 });

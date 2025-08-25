@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:5000/api"; // Or your deployed domain
+const API_BASE = "https://tells-frontend.onrender.com"; 
 
 async function checkIfUserHasSave() {
   const token = localStorage.getItem("jwt_token");
@@ -15,7 +15,7 @@ async function checkIfUserHasSave() {
 
     if (data.scene !== null && typeof Engine !== "undefined") {
       console.log("Loading saved scene:", data.scene);
-      Engine.play(data.scene);  // Jump to saved scene in SugarCube
+      Engine.play(data.scene);  // jump to save in sugarcube
     }
   } catch (error) {
     console.error("Failed to load progress:", error);

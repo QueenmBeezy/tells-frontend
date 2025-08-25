@@ -1,5 +1,4 @@
-const API_BASE = "https://tells-frontend.onrender.com"; // Change if hosted elsewhere
-// REGISTER
+const API_BASE = "https://tells-frontend.onrender.com"; 
 const registerForm = document.getElementById("registerForm");
 if (registerForm) {
 registerForm.addEventListener("submit", async (e) => {
@@ -67,7 +66,7 @@ window.location.href = "index.html";
 }
 
 
-// SHOW WELCOME MESSAGE
+// WELCOME MESSAGE
 window.addEventListener("DOMContentLoaded", async () => {
 const token = localStorage.getItem("jwt_token");
 
