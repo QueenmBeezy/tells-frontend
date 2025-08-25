@@ -1,4 +1,4 @@
-/* tells_frontend/css/styles.css */
+
 body {
   font-family: Arial, sans-serif;
   margin: 2rem;
@@ -8,4 +8,17 @@ body {
 input, button {
   margin: 0.5rem 0;
   padding: 0.5rem;
+}
+
+.auth-buttons a {
+  margin-right: 10px;
+  text-decoration: none;
+  color: white;
+  background-color: #8B0000;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.auth-buttons a:hover {
+  background-color: #a30000;
 }

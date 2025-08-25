@@ -1,4 +1,4 @@
-<!-- tells_frontend/posts.html -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,6 +6,11 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <button id="login-btn" onclick="window.location.href='login.html'">Login</button>
+<button id="register-btn" onclick="window.location.href='register.html'">Register</button>
+<button id="logoutBtn" style="display: none;">Logout</button>
+<div id="welcome-user"></div>
+
   <h1>Your Stories</h1>
 
   <form id="postForm">
@@ -20,5 +25,7 @@
   <div id="postsContainer"></div>
 
   <script src="js/main.js"></script>
+  <script src="register.js"></script>
+
 </body>
 </html>

@@ -4,8 +4,28 @@
 <head>
   <title>Login - Tells</title>
   <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #fafafa; }
+    nav { background-color: #222; padding: 1em; display: flex; justify-content: space-around; }
+    nav a { color: white; text-decoration: none; font-weight: bold; }
+    .main-content { padding: 2em; text-align: center; }
+    .game-preview { background: #fff; padding: 2em; border-radius: 10px; box-shadow: 0 0 10px #ccc; margin-top: 2em; }
+    .game-preview iframe { border: none; width: 100%; max-width: 600px; height: 400px; }
+    .welcome { font-size: 1.5em; }
+  </style>
 </head>
 <body>
+  <button id="login-btn" onclick="window.location.href='login.html'">Login</button>
+<button id="register-btn" onclick="window.location.href='register.html'">Register</button>
+<button id="logoutBtn" style="display: none;">Logout</button>
+<div id="welcome-user"></div>
+
+   <nav>
+    <a href="index.html">Home</a>
+    <a href="stories.html">Stories</a>
+    <a href="community.html">Community</a>
+    <span id="userWelcome"></span>
+  </nav>
   <h1>Login</h1>
   <form id="loginForm">
     <input type="text" id="loginUsername" placeholder="Username" required><br>
@@ -13,6 +33,6 @@
     <button type="submit">Login</button>
   </form>
 
-  <script src="js/main.js"></script>
+  <script src="js/register.js"></script>
 </body>
 </html>

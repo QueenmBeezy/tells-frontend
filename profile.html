@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <button id="login-btn" onclick="window.location.href='login.html'">Login</button>
+<button id="register-btn" onclick="window.location.href='register.html'">Register</button>
+<button id="logoutBtn" style="display: none;">Logout</button>
+<div id="welcome-user"></div>
+
+  <h1>User Profile</h1>
+  <div id="profile-container">
+    <!-- Profile data will load here -->
+  </div>
+
+  <script>
+    async function loadProfile() {
+      const params = new URLSearchParams(window.location.search);
+      const userId = params.get("user");
+
+      if (!userId) return;
+
+      const res = await fetch(`http://localhost:5000/api/users/${userId}`);
+      const user = await res.json();
+
+      const container = document.getElementById("profile-container");
+      container.innerHTML = `
+        <h2>${user.username}</h2>
+        <p>User ID: ${user.id}</p>
+        <!-- Add more fields here as needed -->
+      `;
+    }
+
+    loadProfile();
+  </script>
+  <script src="register.js"></script>
+</body>
+</html>

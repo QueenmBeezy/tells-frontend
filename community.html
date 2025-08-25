@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Community | Tells</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #fafafa; }
+    nav { background-color: #222; padding: 1em; display: flex; justify-content: space-around; }
+    nav a { color: white; text-decoration: none; font-weight: bold; }
+    .main-content { padding: 2em; text-align: center; }
+    .game-preview { background: #fff; padding: 2em; border-radius: 10px; box-shadow: 0 0 10px #ccc; margin-top: 2em; }
+    .game-preview iframe { border: none; width: 100%; max-width: 600px; height: 400px; }
+    .welcome { font-size: 1.5em; }
+
+    .community-container {
+      display: flex;
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    .sidebar {
+      flex: 1;
+      border-right: 1px solid #ccc;
+    }
+
+    .sidebar li {
+      margin-bottom: 1rem;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .active-tab {
+      color: #007BFF;
+    }
+
+    .content {
+      flex: 3;
+    }
+
+    .user-card,
+    .post-card {
+      background-color: #fefefe;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .post-card h4 {
+      margin: 0 0 0.5rem;
+      color: #333;
+    }
+
+    .post-card p {
+      margin: 0;
+    }
+
+    .posts-section {
+      margin-top: 2rem;
+    }
+
+    .posts-section h3 {
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <button id="login-btn" onclick="window.location.href='login.html'">Login</button>
+  <button id="register-btn" onclick="window.location.href='register.html'">Register</button>
+  <button id="logoutBtn" style="display: none;">Logout</button>
+  <div id="welcome-user"></div>
+
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="community.html" class="active">Community</a></li>
+        <li><a href="stories.html">Stories</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="community-container">
+    <aside class="sidebar">
+      <ul>
+        <li><a class="active-tab" onclick="showTab('players')">Players</a></li>
+        <li><a onclick="showTab('creators')">Creators</a></li>
+        <li><a onclick="showTab('featured')">Featured Creators</a></li>
+      </ul>
+    </aside>
+
+    <section class="content">
+      <div id="playersTab" class="tab-content">
+        <div id="userList">
+            <ul id="user-links"></ul>
+        </div>
+        <div class="posts-section">
+          <h3>Community Posts</h3>
+          <div id="postFormContainer" style="margin-bottom: 2rem; display: none;">
+            <h3>Leave a Message</h3>
+            <form id="postForm">
+                <textarea id="postContent" rows="4" placeholder="Share your thoughts..." required></textarea>
+                <br>
+                <button type="submit">Post</button>
+            </form>
+            </div>
+          <div id="postList"></div>
+        </div>
+      </div>
+
+      <div id="creatorsTab" class="tab-content" style="display:none;">
+        <p>Coming soon: Creator profiles will be featured here!</p>
+      </div>
+
+      <div id="featuredTab" class="tab-content" style="display:none;">
+        <p>Our top community members will be featured here!</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Tells. All rights reserved.</p>
+  </footer>
+
+  <script>
+    async function fetchUsers() {
+    const res = await fetch("http://localhost:5000/api/users");
+    const users = await res.json();
+
+    const list = document.getElementById("user-links");
+    list.innerHTML = "";
+
+    users.forEach(user => {
+      const item = document.createElement("li");
+      const link = document.createElement("a");
+      link.href = `profile.html?user=${user.id}`;
+      link.textContent = user.username;
+      item.appendChild(link);
+      list.appendChild(item);
+    });
+  }
+
+
+  
+  fetchUsers();
+
+    // Fetch community posts
+    async function fetchPosts() {
+      const res = await fetch(`${API_BASE}/posts`);
+      const data = await res.json();
+      const postList = document.getElementById("postList");
+      if (token) {
+  document.getElementById("postFormContainer").style.display = "block";
+
+  const postForm = document.getElementById("postForm");
+  postForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const content = document.getElementById("postContent").value;
+
+    const res = await fetch(`${API_BASE}/posts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ content })
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      document.getElementById("postContent").value = "";
+      fetchPosts(); // reload posts
+    } else {
+      alert(data.error || "Failed to post");
+    }
+  });
+}
+      if (Array.isArray(data.posts)) {
+        data.posts.forEach(post => {
+          const div = document.createElement("div");
+          div.className = "post-card";
+          div.innerHTML = `
+            <h4>@${post.username}</h4>
+            <p>${post.content}</p>
+          `;
+          postList.appendChild(div);
+        });
+      } else {
+        postList.innerHTML = "<p>No posts yet.</p>";
+      }
+    }
+
+    function showTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
+      document.getElementById(`${tabName}Tab`).style.display = 'block';
+
+      document.querySelectorAll('.sidebar a').forEach(link => link.classList.remove('active-tab'));
+      event.target.classList.add('active-tab');
+    }
+
+    // Fetch data on load
+    fetchUsers();
+    fetchPosts();
+  </script>
+  <script src="register.js"></script>
+</body>
+</html>
